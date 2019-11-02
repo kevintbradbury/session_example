@@ -7,7 +7,7 @@ const express = require("express"),
     helmet = require("helmet"),
     rateLimit = require("express-rate-limit"),
     cookieSession = require('cookie-session'),
-    router = express.Router(),
+    session = require("express-session"),
     app = express();
 
 const User = require("./models/user");
@@ -48,20 +48,6 @@ app.use(helmet());
 app.use(helmet.noCache());
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
-const knownSources = ["'self'", 'maps.googleapis.com', 'maps.gstatic.com'];
-
-// app.use(helmet.contentSecurityPolicy({
-//     directives: {
-//         baseUri: knownSources,
-//         blockAllMixedContent: true,
-//         connectSrc: knownSources,
-//         defaultSrc: knownSources,
-//         formAction: knownSources,
-//         frameAncestors: knownSources
-//     }
-// }));
-
-let session = require("express-session");
 // Socket settings for Logged in sessions
 app.use(
     session({
